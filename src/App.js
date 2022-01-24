@@ -4,7 +4,7 @@ import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
 import { Route } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -26,7 +26,7 @@ class App extends React.Component {
       }
 
       return (
-         <BrowserRouter basename={process.env.PUBLIC_URL}>
+         <HashRouter basename={process.env.PUBLIC_URL}>
             <div className="app-wrapper">
                <HeaderContainer />
                <Navbar state={this.props.sidebar} />
@@ -40,7 +40,7 @@ class App extends React.Component {
                   <Route path="/settings" component={Settings} />
                </div>
             </div>
-         </BrowserRouter>
+         </HashRouter>
       );
    }
 }
