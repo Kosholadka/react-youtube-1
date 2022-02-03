@@ -12,7 +12,7 @@ import {
    getpageSize,
    getTotalUsersCount,
    getUsers,
-} from '../../redux/users-selectors.js';
+} from '../../redux/users-selectors';
 
 class UsersContainer extends React.Component {
    componentDidMount() {

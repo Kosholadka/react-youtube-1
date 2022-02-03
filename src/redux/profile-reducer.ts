@@ -4,6 +4,7 @@ const ADD_POST = 'profile/ADD-POST';
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE';
 const SET_USER_STATUS = 'profile/SET_USER_STATUS';
 const DELETE_POST = 'profile/DELETE_POST';
+const SAVE_PHOTO_SUCCESS = 'profile/SAVE_PHOTO_SUCCESS';
 
 let initialState = {
    posts: [
@@ -42,6 +43,12 @@ const profileReducer = (state = initialState, action) => {
             posts: state.posts.filter(p => p.id !== action.postId),
          };
       }
+      case SAVE_PHOTO_SUCCESS: {
+         return {
+            ...state,
+            profile: { ...state.profile, photos: action.photos },
+         };
+      }
       default:
          return state;
    }
@@ -51,6 +58,7 @@ export const addPostActionCreator = newPostText => ({ type: ADD_POST, newPostTex
 export const setUserProfile = profile => ({ type: SET_USER_PROFILE, profile });
 export const setUserStatus = status => ({ type: SET_USER_STATUS, status });
 export const deletePost = postId => ({ type: DELETE_POST, postId });
+export const savePhotoSuccess = photos => ({ type: SAVE_PHOTO_SUCCESS, photos });
 
 export const getUserProfile = userId => async dispatch => {
    let responce = await profileAPI.getUserProfile(userId);
@@ -61,11 +69,29 @@ export const getUserStatus = userId => async dispatch => {
    let responce = await profileAPI.getUserStatus(userId);
    dispatch(setUserStatus(responce.data));
 };
+
 export const updateUserStatus = status => async dispatch => {
    let responce = await profileAPI.updateUserStatus(status);
 
    if (responce.data.resultCode === 0) {
       dispatch(setUserStatus(status));
+   }
+};
+
+export const savePhoto = file => async dispatch => {
+   let responce = await profileAPI.savePhoto(file);
+
+   if (responce.data.resultCode === 0) {
+      dispatch(savePhotoSuccess(responce.data.data.photos));
+   }
+};
+
+export const saveProfile = profile => async (dispatch, getState) => {
+   const userId = getState().auth.userId;
+   const responce = await profileAPI.saveProfile(profile);
+
+   if (responce.data.resultCode === 0) {
+      dispatch(getUserProfile(userId));
    }
 };
 

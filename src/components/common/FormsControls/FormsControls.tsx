@@ -1,4 +1,3 @@
-import React from 'react';
 import s from './FormsControls.module.css';
 
 const FormControl = ({ input, meta: {touched, error}, children}) => {
