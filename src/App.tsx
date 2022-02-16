@@ -16,6 +16,9 @@ import DialogsContainer from './components/dialogs/DialogsContainer';
 
 import './App.css';
 import { initializeApp } from './redux/app-reducer';
+import Clicker from './components/clicker';
+import Tictactoe from './components/tictactoe';
+import Buttons from './components/buttons/index';
 
 interface Props {
    sidebar: unknown;
@@ -50,6 +53,9 @@ class App extends Component<Props> {
                   <Route path="/news" component={News} />
                   <Route path="/music" component={Music} />
                   <Route path="/settings" component={Settings} />
+                  <Route path="/clicker" component={Clicker} />
+                  <Route path="/tictactoe" component={Tictactoe} />
+                  <Route path="/buttons" component={Buttons} />
                </div>
             </div>
          </HashRouter>

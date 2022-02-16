@@ -1,0 +1,30 @@
+.clicker {
+   /* align-items: center; */
+   text-align: center;
+}
+
+.value {
+   font-size: 155px;
+}
+
+.button {
+   font-size: 55px;
+   border-color: rgb(3, 56, 10);
+   color: white;
+   background-color: rgb(3, 153, 3);
+   border-radius: 5px;
+   padding: 20px;
+}
+
+.button:hover {
+   background-color: rgb(2, 100, 2);
+   cursor: pointer;
+}
+
+.stop {
+   background-color: red;
+}
+
+.stop:hover {
+   background-color: rgb(156, 7, 7);
+}
