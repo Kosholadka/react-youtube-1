@@ -1,19 +1,19 @@
 import { memo, useCallback } from 'react';
 
-import s from './square.module.css';
+import s from './message.module.css';
 
-export const Square = memo<Square.Props>(({ id, title, deleteSquare, editSquare }) => {
+export const Message = memo<Message.Props>(({ id, title, deleteMessage, editMessage }) => {
    const handleDelete = useCallback(() => {
-      deleteSquare(id);
-   }, [deleteSquare, id]);
+      deleteMessage(id);
+   }, [deleteMessage, id]);
 
    const handleEdit = useCallback(() => {
-      editSquare(id);
-   }, [editSquare, id]);
+      editMessage(id);
+   }, [editMessage, id]);
 
    return (
-      <div className={s.field}>
-         <div className={s.square}>
+      <div className={s.chatField}>
+         <div className={s.messageField}>
             <div>{title}</div>
          </div>
          <div onClick={handleDelete} className={s.delete}>
@@ -26,11 +26,11 @@ export const Square = memo<Square.Props>(({ id, title, deleteSquare, editSquare 
    );
 });
 
-export namespace Square {
+export namespace Message {
    export interface Props {
       id: string;
       title: string;
-      editSquare: (id: string) => void;
-      deleteSquare: (id: string) => void;
+      editMessage: (id: string) => void;
+      deleteMessage: (id: string) => void;
    }
 }

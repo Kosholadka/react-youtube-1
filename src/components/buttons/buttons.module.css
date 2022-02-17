@@ -2,7 +2,10 @@
    cursor: pointer;
 }
 
-.input {
+textarea {
+   resize: none;
+   width: 20%;
+   
 }
 
 .squaresContainer {

@@ -1,9 +1,9 @@
-.field {
+.chatField {
    display: flex;
    align-items: center;
 }
 
-.square {
+.messageField {
    /* display: flex;
    width: 80px;
    height: 80px;
@@ -18,12 +18,11 @@
    font-size: 13px;
    background: white;
    margin-bottom: 10px;
-   width: 10%;
-   overflow: hidden;
+   width: 15%;
    overflow-wrap: break-word;
 }
 
-.field img {
+.chatField img {
    width: 15px;
    height: 15px;
 }

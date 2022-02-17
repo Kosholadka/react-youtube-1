@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
 import cuid from 'cuid';
 import s from './buttons.module.css';
+import TextareaAutosize from 'react-textarea-autosize';
 
-import { Square } from './components';
+import { Message } from './components';
 
 class Buttons extends Component<Buttons.Props, Buttons.State> {
-   private readonly inputRef;
+   private readonly textAreaRef;
    private readonly chatContainer;
 
    constructor(props: Buttons.Props) {
       super(props);
 
-      this.inputRef = React.createRef<HTMLInputElement>();
+      this.textAreaRef = React.createRef<HTMLTextAreaElement>();
 
       this.chatContainer = React.createRef<HTMLDivElement>();
 
       this.state = {
-         squares: [],
+         messages: [],
       };
    }
 
-   private addSquare = () => {
-      if (!this.inputRef.current) {
+   private addMessage = () => {
+      if (!this.textAreaRef.current) {
          return;
       }
 
-      const { value } = this.inputRef.current;
+      const { value } = this.textAreaRef.current;
 
       if (!value) {
          return;
@@ -33,14 +34,14 @@ class Buttons extends Component<Buttons.Props, Buttons.State> {
 
       const generatedId = cuid();
 
-      const newSquare: Buttons.Square = {
+      const newMessage: Buttons.Message = {
          value,
          id: generatedId,
       };
 
       this.setState(
          {
-            squares: [...this.state.squares, newSquare],
+            messages: [...this.state.messages, newMessage],
          },
          () => this.scrollToMyRef(),
       );
@@ -49,16 +50,16 @@ class Buttons extends Component<Buttons.Props, Buttons.State> {
    };
 
    private zeroInput = () => {
-      if (!this.inputRef.current) {
+      if (!this.textAreaRef.current) {
          return;
       }
 
-      this.inputRef.current.value = '';
+      this.textAreaRef.current.value = '';
    };
 
-   private deleteSquare = (id: string) => {
+   private deleteMessage = (id: string) => {
       this.setState({
-         squares: this.state.squares.filter(square => square.id !== id),
+         messages: this.state.messages.filter(message => message.id !== id),
       });
    };
 
@@ -72,12 +73,12 @@ class Buttons extends Component<Buttons.Props, Buttons.State> {
     * 6. Делаем setState, прокидывая туда наш modifiedSquares
     */
 
-   private editSquare = (id: string) => {
-      const { squares } = this.state;
+   private editMessage = (id: string) => {
+      const { messages } = this.state;
 
-      const squaresCopy = squares.slice(); // или [...squares]
+      const messagesCopy = messages.slice(); // или [...squares]
 
-      const foundSquareIndex = squaresCopy.findIndex(square => square.id === id);
+      const foundMessageIndex = messagesCopy.findIndex(message => message.id === id);
 
       const newValue = prompt('type new value');
 
@@ -85,23 +86,23 @@ class Buttons extends Component<Buttons.Props, Buttons.State> {
          return;
       }
 
-      squaresCopy[foundSquareIndex].value = newValue;
+      messagesCopy[foundMessageIndex].value = newValue;
 
       this.setState({
-         squares: squaresCopy,
+         messages: messagesCopy,
       });
    };
 
-   private renderSquares = () => {
-      const { squares } = this.state;
+   private renderMessages = () => {
+      const { messages } = this.state;
 
-      return squares.map(square => (
-         <Square
-            id={square.id}
-            key={square.id}
-            title={square.value}
-            editSquare={this.editSquare}
-            deleteSquare={this.deleteSquare}
+      return messages.map(message => (
+         <Message
+            id={message.id}
+            key={message.id}
+            title={message.value}
+            editMessage={this.editMessage}
+            deleteMessage={this.deleteMessage}
          />
       ));
    };
@@ -116,12 +117,12 @@ class Buttons extends Component<Buttons.Props, Buttons.State> {
       return (
          <>
             <div className={s.squaresContainer} ref={this.chatContainer}>
-               {this.renderSquares()}
+               {this.renderMessages()}
             </div>
-            <div className={s.input}>
-               <input ref={this.inputRef} placeholder="type here something" />
-               <button onClick={this.addSquare} className={s.button}>
-                  Add
+            <div>
+               <TextareaAutosize ref={this.textAreaRef} placeholder="type here something" minRows={3} />
+               <button onClick={this.addMessage} className={s.button}>
+                  Send
                </button>
             </div>
          </>
@@ -133,10 +134,10 @@ export namespace Buttons {
    export interface Props {}
 
    export interface State {
-      squares: Square[];
+      messages: Message[];
    }
 
-   export interface Square {
+   export interface Message {
       id: string;
       value: string;
    }
